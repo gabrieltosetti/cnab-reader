@@ -4,12 +4,37 @@
     "link_arquivo": "https://cms.santander.com.br/sites/WPS/documentos/arq-layout-de-arquivos-2/17-10-26_172236_149-382-cobranca+layout+cnab+240+febraban+puro+versao+setembro+2017.pdf",
     "header": {},
     "registro": {
-        "segmento_p": {
-            "nosso_numero": {
-                "pos": [38, 57],
-                "tamanho": 20,
-                "formato": "int"
+        "segmentos": [
+            {
+                "codigo": "P",
+                "codigo_pos": [14, 14],
+                "obrigatorio": 1,
+                "campos": {
+                    "nosso_numero": {
+                        "pos": [38, 57],
+                        "tamanho": 20,
+                        "formato": "int"
+                    },
+                    "seu_numero": {
+                        "pos": [20, 30],
+                        "tamanho": 10,
+                        "formato": "int"
+                    }
+                }
+            },
+            {
+                "codigo": "U",
+                "codigo_pos": [14, 14],
+                "obrigatorio": 1,
+                "campos": {
+                    "valor_pago": {
+                        "pos": [78, 92],
+                        "tamanho": 15,
+                        "formato": "float",
+                        "casas_decimais": 2
+                    }
+                }
             }
-        }
+        ]
     }
 }

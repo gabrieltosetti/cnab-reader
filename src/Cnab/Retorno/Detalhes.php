@@ -39,8 +39,13 @@ class Detalhes
         $this->file->seek(2);
     }
 
-    public function current()
+    public function current(): string
     {
         return $this->file->current();
+    }
+
+    public function getDetalhe()
+    {
+        return new Detalhe($this->file, $this->layout);
     }
 }
