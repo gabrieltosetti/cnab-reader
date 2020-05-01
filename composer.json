@@ -1,0 +1,16 @@
+{
+    "name": "gabrieltosetti/cnab-reader",
+    "type": "library",
+    "authors": [
+        {
+            "name": "tosetti",
+            "email": "gabriel.tosetti@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Cnab\\": "src/Cnab"
+        }
+    }
+}
