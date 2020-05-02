@@ -17,14 +17,6 @@ class Factory
         $versaoArquivo = self::getVersaoArquivo($file);
         $layout = self::getLayoutArquivo($codigoBanco, $tamanhoArquivo, $versaoArquivo);
 
-        print_r([
-            $codigoBanco,
-            $tamanhoArquivo,
-            $versaoArquivo,
-            $layout
-        ]);
-        die();
-
         return new Arquivo($file, $layout);
 
     }
