@@ -14,7 +14,7 @@ class Detalhe
 
     function __construct(\SplFileObject $file, array $layout)
     {
-        $linha = preg_replace("[\n\r]", '', $file->current());
+        $linha = preg_replace("/[\n\r]/", '', $file->current());
         $segmentosEncontrados = [];
 
         foreach ($layout['registro']['segmentos'] as $seg) {

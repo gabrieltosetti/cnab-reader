@@ -4,6 +4,7 @@ namespace Cnab\Retorno;
 
 use \SplFileObject;
 use \Cnab\Retorno\Arquivo;
+use \Cnab\Banco;
 
 class Factory
 {
@@ -16,28 +17,38 @@ class Factory
         $versaoArquivo = self::getVersaoArquivo($file);
         $layout = self::getLayoutArquivo($codigoBanco, $tamanhoArquivo, $versaoArquivo);
 
+        print_r([
+            $codigoBanco,
+            $tamanhoArquivo,
+            $versaoArquivo,
+            $layout
+        ]);
+        die();
+
         return new Arquivo($file, $layout);
 
     }
 
     private static function getNumeroBancoArquivo(\SplFileObject $file): string
     {
-        return '033';
+        // Posição genérica do código do banco: 1, 3
+        return substr($file->current(), 0, 3);
     }
 
     private static function getTamanhoArquivo(\SplFileObject $file): int
     {
-        return 240;
+        return strlen(preg_replace("/[\n\r]/", '', $file->current()));
     }
 
     private static function getVersaoArquivo(\SplFileObject $file): string
     {
-        return '030';
+        // Posição genérica da versão do arquivo: 164, 166
+        return substr($file->current(), 163, 3);
     }
 
     private static function getLayoutArquivo(string $codigoBanco, $tamanhoArquivo, $versaoArquivo): array
     {
-        $nomeBanco = 'Santander';
+        $nomeBanco = ucfirst(Banco::getNomeBanco($codigoBanco));
         $json = file_get_contents(__DIR__. "/../Layouts/{$nomeBanco}/{$tamanhoArquivo}/{$versaoArquivo}.json");
         $layout = json_decode($json, true);
 

@@ -1,0 +1,40 @@
+{
+    "codigo_banco": "033",
+    "versao": "040",
+    "link_arquivo": "https://www.wmcsistemas.com/instalar/Layouts%20-%20Boletos_Cheques_Integracoes/Layout%20Santander/Santander%20-%20CNAB%20240.pdf",
+    "header": {},
+    "registro": {
+        "segmentos": [
+            {
+                "codigo": "P",
+                "codigo_pos": [14, 14],
+                "obrigatorio": 1,
+                "campos": {
+                    "nosso_numero": {
+                        "pos": [38, 57],
+                        "tamanho": 20,
+                        "formato": "int"
+                    },
+                    "seu_numero": {
+                        "pos": [20, 30],
+                        "tamanho": 10,
+                        "formato": "int"
+                    }
+                }
+            },
+            {
+                "codigo": "U",
+                "codigo_pos": [14, 14],
+                "obrigatorio": 1,
+                "campos": {
+                    "valor_pago": {
+                        "pos": [78, 92],
+                        "tamanho": 15,
+                        "formato": "float",
+                        "casas_decimais": 2
+                    }
+                }
+            }
+        ]
+    }
+}
