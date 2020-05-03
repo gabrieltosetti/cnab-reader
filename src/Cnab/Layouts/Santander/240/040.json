@@ -6,7 +6,7 @@
     "retorno": {
         "segmentos": [
             {
-                "codigo": "P",
+                "codigo": "T",
                 "codigo_pos": [14, 14],
                 "obrigatorio": 1,
                 "campos": {

@@ -2,7 +2,8 @@
 
 namespace Cnab\Retorno\Detalhe;
 
-class Factory {
+class Factory
+{
     public static function createDetalhe(array $linhas, array $layout): Detalhe
     {
         $layoutSegmentos = $layout['retorno']['segmentos'];
@@ -11,14 +12,12 @@ class Factory {
 
         $detalhe = new Detalhe($linhas, $layout);
 
-        print_r($linhas);
-
         foreach ($linhas as $linha) {
             $segCodigo = self::getPosition($linha, $codigoPos);
 
-            $key = array_search ($segCodigo, $codigos);
-            $segmento = $layoutSegmentos[$key];        
-    
+            $key = array_search($segCodigo, $codigos);
+            $segmento = $layoutSegmentos[$key];
+
             foreach ($segmento['campos'] as $campo => $campoInfo) {
                 $valor = self::getPosition($linha, $campoInfo['pos']);
                 $valor = self::formatarValor($valor, $campoInfo);
@@ -43,14 +42,14 @@ class Factory {
         $codigoSegmentos = array_column($layoutSegmentos, 'codigo');
         $posicaoSegmentosPadrao = $layoutSegmentos[0]['codigo_pos'];
         $linhaAtual = $file->key();
-        
+
         $segmentosJaEncontrados = [];
         $linhas = [];
 
         do {
             $linha = preg_replace("/[\n\r]/", '', $file->current());
             $file->next();
-        
+
             $segCodigo = self::getPosition($linha, $posicaoSegmentosPadrao);
 
             if (in_array($segCodigo, $segmentosJaEncontrados)) {
@@ -60,7 +59,10 @@ class Factory {
             if (in_array($segCodigo, $codigoSegmentos)) {
                 $segmentosJaEncontrados[] = $segCodigo;
                 $linhas[] = $linha;
+                continue;
             }
+
+            break;
         } while (true);
 
         // Resetar o arquivo para a linha antes de chegar aqui

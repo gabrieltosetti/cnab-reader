@@ -32,7 +32,6 @@ class Detalhe
 
     function __set($campo, $valor)
     {
-        print "$campo";
         $this->data[$campo] = $valor;
 
         $campoCamel = str_replace('_', '', ucwords($campo, '_'));
