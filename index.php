@@ -7,4 +7,9 @@ $filePath = 'cnab-examples/santander240_28-04-2020.TXT';
 
 $arquivo = Factory::criarArquivo($filePath);
 
-var_dump($arquivo->getDetalhes()->getDetalhe()->nosso_numero);
+$detalhes = $arquivo->getDetalhes();
+
+foreach ($detalhes as $detalhe) {
+    var_dump($detalhe->nosso_numero);
+    die();
+}
