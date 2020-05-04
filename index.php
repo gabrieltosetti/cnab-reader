@@ -3,7 +3,8 @@ include_once 'vendor/autoload.php';
 
 use \Cnab\Retorno\Factory;
 
-function getMemoryPeak() {
+function getMemoryPeak()
+{
     $bytes = memory_get_peak_usage();
     $precision = 2;
 
@@ -18,7 +19,7 @@ function getMemoryPeak() {
     return round($bytes, $precision) . " " . $units[$pow];
 }
 
-print "\nMemory: " . getMemoryPeak() . "\n";
+print "\nMemory: " . getMemoryPeak() . "\n\n";
 
 $filePath = 'cnab-examples/santander240_28-04-2020.TXT';
 
@@ -26,8 +27,15 @@ $arquivo = Factory::criarArquivo($filePath);
 
 $detalhes = $arquivo->getDetalhes();
 
+$count = 1;
+
 foreach ($detalhes as $detalhe) {
-    // var_dump($detalhe->nosso_numero);
-    // die();
+    var_dump($detalhe->nosso_numero);
+    ++$count;
+
+    if ($count == 3) {
+        print "\nMemory: " . getMemoryPeak() . "\n";
+
+        die();
+    }
 }
-print "\nMemory: " . getMemoryPeak() . "\n";

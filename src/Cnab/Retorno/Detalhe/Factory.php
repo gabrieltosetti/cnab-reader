@@ -73,6 +73,24 @@ class Factory
 
     private static function formatarValor(string $valor, array $info)
     {
-        return $valor;
+        switch ($info['tipo']) {
+            case 'int':
+                return (int) trim($valor);
+
+            case 'string':
+                return $valor;
+
+            case 'decimal':
+                if (!$info['casas_decimais']) {
+                    throw new \Exception('Casas decimais não informadas.');
+                }
+
+                $valor = (int) trim($valor);
+
+                // Para andar a vírgula para a esquerda, basta dividir o número por 10, 100, 1000...
+                return (float) ($valor / pow(10, $info['casas_decimais']));
+            default:
+                throw new \Exception("Tipo do campo não encontrado: {$info['tipo']}");
+        }
     }
 }

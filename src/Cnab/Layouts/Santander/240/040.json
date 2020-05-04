@@ -13,12 +13,12 @@
                     "nosso_numero": {
                         "pos": [41, 53],
                         "tamanho": 13,
-                        "formato": "int"
+                        "tipo": "int"
                     },
                     "seu_numero": {
                         "pos": [55, 69],
                         "tamanho": 15,
-                        "formato": "int"
+                        "tipo": "int"
                     }
                 }
             },
@@ -30,7 +30,7 @@
                     "valor_pago": {
                         "pos": [78, 92],
                         "tamanho": 15,
-                        "formato": "float",
+                        "tipo": "decimal",
                         "casas_decimais": 2
                     }
                 }

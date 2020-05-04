@@ -25,10 +25,16 @@ class Detalhes implements \Iterator
     private $key;
 
     /**
-     * Quantas linhas (segmentos) sao necessarias pular para o começo do proximo Detalhe
+     * Quantidade de linhas (segmentos) do detalhe atual
      * @var int
      */
     private $qtdLinhasDetalheAtual;
+
+    /**
+     * Todas as linhas do detalhe atual
+     * @var array
+     */
+    private $linhasDetalheAtual;
 
     /**
      * Numero do banco com 3 caracteres (ex.: 001, 033, 237)
@@ -71,51 +77,59 @@ class Detalhes implements \Iterator
         $this->key = 2;
     }
 
-    private function validarDetalheAtual(): array
+    private function getLinhasDetalheAtual(): array
+    {
+        if (!$this->linhasDetalheAtual) {
+            $this->validarDetalheAtual();
+        }
+
+        return $this->linhasDetalheAtual;
+    }
+
+    private function validarDetalheAtual()
     {
         $linhas = Detalhe\Factory::getLinhasSegmentos($this->file, $this->layout['retorno']['segmentos']);
 
         if (!$linhas) {
             $this->isValid = false;
-            return [];
+            $this->qtdLinhasDetalheAtual = null;
+            $this->linhasDetalheAtual = null;
+
+            return;
         }
 
         $this->isValid = true;
         $this->qtdLinhasDetalheAtual = count($linhas);
-
-        return $linhas;
+        $this->linhasDetalheAtual = $linhas;
     }
 
     public function current(): Detalhe\Detalhe
     {
-        $linhas = $this->validarDetalheAtual();
-
         if (!$this->valid()) {
             throw new \Exception('Não existe detalhe no ponteiro atual.');
         }
+
+        $linhas = $this->getLinhasDetalheAtual();
 
         return Detalhe\Factory::createDetalhe($linhas, $this->layout);
     }
 
     public function next()
     {
-        if (!$this->qtdLinhasDetalheAtual) {
-            // Tenta validar se tem detalhe no ponteiro atual
-            // se tiver, andamos até o próximo, caso volte array vazio
-            // nao mudamos o ponteiro e o valid() ira retornar false
-            if (!$this->validarDetalheAtual()) {
-                return;
-            }
+        if (!$this->valid()) {
+            return;
         }
 
+        $proximoDetalhe = $this->key() + $this->qtdLinhasDetalheAtual;
+
         // Mover o ponteiro para o proximo detalhe
-        $this->file->seek($this->file->key() + $this->qtdLinhasDetalheAtual);
+        $this->file->seek($proximoDetalhe);
+
+        // Atualizar a linha atual
+        $this->key = $proximoDetalhe;
 
         // limpar a quantidade de linhas do detalhe atual
         $this->qtdLinhasDetalheAtual = null;
-
-        // Atualizar a linha atual
-        $this->key = $this->file->key();
 
         // Apos andar o ponteiro, não sabemos se o detalhe atual é valido
         $this->isValid = null;
@@ -141,7 +155,7 @@ class Detalhes implements \Iterator
     {
         // Caso o detalhe da posição atual do ponteiro não foi validado ainda
         if ($this->isValid === null) {
-            return (bool) $this->validarDetalheAtual();
+            $this->validarDetalheAtual();
         }
 
         // Caso o detalhe atual já foi validado, retornar valor
