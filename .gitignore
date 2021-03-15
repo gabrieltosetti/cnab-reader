@@ -1,3 +1,3 @@
 vendor
-composer.lock
 cnabs_para_leitura/
+tests/tmp
