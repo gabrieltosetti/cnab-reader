@@ -1,3 +1,6 @@
 vendor
 cnabs_para_leitura/
 tests/tmp
+
+cnab-files/**/*.*
+!/**/*.gitkeep
