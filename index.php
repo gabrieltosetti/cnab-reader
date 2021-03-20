@@ -3,6 +3,8 @@ include_once 'vendor/autoload.php';
 
 use \Cnab\Retorno\Factory;
 
+error_reporting(E_ALL);
+
 function getMemoryPeak()
 {
     $bytes = memory_get_peak_usage();
@@ -33,7 +35,7 @@ foreach ($detalhes as $detalhe) {
     var_dump($detalhe->nosso_numero);
     ++$count;
 
-    if ($count == 3) {
+    if ($count == 1001) {
         print "\nMemory: " . getMemoryPeak() . "\n";
 
         die();

@@ -31,8 +31,10 @@ class Factory
 
     private static function getPosition(string $linha, array $positions)
     {
+        // Quantidade de caracteres do segmento
         $tamanho = ($positions[1] - $positions[0]) + 1;
 
+        // Retorna o código da linha (Ex.: T ou U)
         return substr($linha, ($positions[0] - 1), $tamanho);
     }
 
@@ -41,7 +43,7 @@ class Factory
         // Todos os possiveis segmentos do layout
         $codigoSegmentos = array_column($layoutSegmentos, 'codigo');
         $posicaoSegmentosPadrao = $layoutSegmentos[0]['codigo_pos'];
-        $linhaAtual = $file->key();
+        $linhaAtual = $file->ftell();
 
         $segmentosJaEncontrados = [];
         $linhas = [];
@@ -66,7 +68,7 @@ class Factory
         } while (true);
 
         // Resetar o arquivo para a linha antes de chegar aqui
-        $file->seek($linhaAtual);
+        $file->fseek($linhaAtual);
 
         return $linhas;
     }
