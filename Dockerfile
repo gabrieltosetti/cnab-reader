@@ -26,3 +26,11 @@ RUN  apt-get update; apt-get install -y libzip-dev zip; \
     echo “xdebug.idekey=docker” >> /etc/php.ini; \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer; \
     rm -rf /tmp/*;
+
+    
+# Instalar e configurar o Xdebug
+RUN docker-php-source extract; \
+    pecl install xdebug-2.9.8; \
+    docker-php-ext-enable xdebug; \
+    docker-php-source delete;
+    # echo “error_reporting=E_ALL” >> /etc/php.ini; \
