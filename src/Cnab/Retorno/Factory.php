@@ -47,7 +47,7 @@ class Factory
         return $layout;
     }
 
-    private function openFile($filePath): \SplFileObject
+    private static function openFile($filePath): \SplFileObject
     {
         return new SplFileObject($filePath, 'r');
     }

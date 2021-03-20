@@ -8,17 +8,17 @@ services:
     build: .
     container_name: cnab-reader-php
     ports:
-    - "8001:80"
+      - "80:80"
     tty: true
     volumes:
-    - .:/var/www/html
-    - static-content:/tmp/xdebug
+      - .:/var/www/html
+      - static-content:/tmp/xdebug
     environment:
       XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1 profiler_enable_trigger=1 profiler_output_dir=/tmp/xdebug
       APPLICATION_ENV: development
 
   webgrinder:
-    build: ./webgrinder
+    build: ./docker/webgrinder
     container_name: webgrinder
     ports:
       - "8001:80"

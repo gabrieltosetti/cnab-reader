@@ -21,7 +21,7 @@ function getMemoryPeak()
 
 print "\nMemory: " . getMemoryPeak() . "\n\n";
 
-$filePath = 'cnab-examples/santander240_28-04-2020.TXT';
+$filePath = 'cnab-files/santander240_28-04-2020.TXT';
 
 $arquivo = Factory::criarArquivo($filePath);
 
