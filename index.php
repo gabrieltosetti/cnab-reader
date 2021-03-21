@@ -4,6 +4,7 @@ include_once 'vendor/autoload.php';
 use \Cnab\Retorno\Factory;
 
 error_reporting(E_ALL);
+set_time_limit(1000);
 
 $filePath = 'cnab-files/santander240_28-04-2020.TXT';
 
