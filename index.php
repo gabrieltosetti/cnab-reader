@@ -18,9 +18,6 @@ $debug = microtime(true);
 foreach ($detalhes as $detalhe) {
     // var_dump($detalhe->nosso_numero);
     ++$count;
-
-    if ($count == 30000) {
-        break;
-    }
 }
-echo round(microtime(true) - $debug, 3);
+echo 'Quantidade de linhas lidas: ' . $count . '<br>';
+echo 'Tempo: '. round(microtime(true) - $debug, 3);
