@@ -29,13 +29,13 @@ $detalhes = $arquivo->getDetalhes();
 
 $count = 1;
 
+$debug = microtime(true);
 foreach ($detalhes as $detalhe) {
-    var_dump($detalhe->nosso_numero);
+    // var_dump($detalhe->nosso_numero);
     ++$count;
 
-    if ($count == 3) {
-        print "\nMemory: " . getMemoryPeak() . "\n";
-
-        die();
+    if ($count == 30000) {
+        break;
     }
 }
+echo round(microtime(true) - $debug, 3);
