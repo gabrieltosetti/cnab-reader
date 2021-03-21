@@ -29,12 +29,17 @@ class Factory
         return $detalhe;
     }
 
-    private static function getPosition(string $linha, array $positions)
+    /**
+     * Bem parecido com o substr mas usando array
+     * @param string $linha 
+     * @param array  $positions Array com apenas inicio e fim em integer
+     *
+     * @return string 
+     */
+    private static function getPosition(string $linha, array $positions): string
     {
-        // Quantidade de caracteres do segmento
         $tamanho = ($positions[1] - $positions[0]) + 1;
 
-        // Retorna o código da linha (Ex.: T ou U)
         return substr($linha, ($positions[0] - 1), $tamanho);
     }
 

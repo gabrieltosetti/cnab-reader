@@ -120,13 +120,16 @@ class Detalhes implements \Iterator
             return;
         }
 
-        $proximoDetalhe = $this->key() + $this->qtdLinhasDetalheAtual;
+        $linhaProximoDetalhe = $this->qtdLinhasDetalheAtual + 1;
 
         // Mover o ponteiro para o proximo detalhe
-        $this->file->seek($proximoDetalhe);
+        // Usar o next, o seek é absurdamente mais lento
+        for ($i = 1; $i <= $linhaProximoDetalhe; $i++) {
+            $this->file->next();
+        }
 
         // Atualizar a linha atual
-        $this->key = $proximoDetalhe;
+        $this->key += $this->qtdLinhasDetalheAtual;
 
         // limpar a quantidade de linhas do detalhe atual
         $this->qtdLinhasDetalheAtual = null;
