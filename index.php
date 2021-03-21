@@ -6,8 +6,6 @@ use \Cnab\Retorno\Factory;
 error_reporting(E_ALL);
 set_time_limit(1000);
 
-print "\nMemory: " . getMemoryPeak() . "\n\n";
-
 $filePath = 'cnab-files/santander240_28-04-2020.TXT';
 
 $arquivo = Factory::criarArquivo($filePath);
