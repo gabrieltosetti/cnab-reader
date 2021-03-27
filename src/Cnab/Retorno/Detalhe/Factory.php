@@ -29,7 +29,14 @@ class Factory
         return $detalhe;
     }
 
-    private static function getPosition(string $linha, array $positions)
+    /**
+     * Bem parecido com o substr mas usando array
+     * @param string $linha 
+     * @param array  $positions Array com apenas inicio e fim em integer
+     *
+     * @return string 
+     */
+    private static function getPosition(string $linha, array $positions): string
     {
         $tamanho = ($positions[1] - $positions[0]) + 1;
 
@@ -41,13 +48,13 @@ class Factory
         // Todos os possiveis segmentos do layout
         $codigoSegmentos = array_column($layoutSegmentos, 'codigo');
         $posicaoSegmentosPadrao = $layoutSegmentos[0]['codigo_pos'];
-        $linhaAtual = $file->key();
+        $linhaAtual = $file->ftell();
 
         $segmentosJaEncontrados = [];
         $linhas = [];
 
         do {
-            $linha = preg_replace("/[\n\r]/", '', $file->current());
+            $linha = $file->current();
             $file->next();
 
             $segCodigo = self::getPosition($linha, $posicaoSegmentosPadrao);
@@ -66,7 +73,7 @@ class Factory
         } while (true);
 
         // Resetar o arquivo para a linha antes de chegar aqui
-        $file->seek($linhaAtual);
+        $file->fseek($linhaAtual);
 
         return $linhas;
     }

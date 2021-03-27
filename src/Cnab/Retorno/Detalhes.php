@@ -64,13 +64,6 @@ class Detalhes implements \Iterator
         return $this->key + 1;
     }
 
-    public function setLinhaAtual($linha)
-    {
-        // Lembrando que a primeira linha é o indice 0
-        $this->key = $linha - 1;
-        return;
-    }
-
     private function pularHeaderTrailler()
     {
         $this->file->seek(2);
@@ -120,13 +113,14 @@ class Detalhes implements \Iterator
             return;
         }
 
-        $proximoDetalhe = $this->key() + $this->qtdLinhasDetalheAtual;
-
         // Mover o ponteiro para o proximo detalhe
-        $this->file->seek($proximoDetalhe);
+        // Usar o next, o seek é absurdamente mais lento
+        for ($i = 1; $i <= $this->qtdLinhasDetalheAtual; $i++) {
+            $this->file->next();
+        }
 
         // Atualizar a linha atual
-        $this->key = $proximoDetalhe;
+        $this->key += $this->qtdLinhasDetalheAtual;
 
         // limpar a quantidade de linhas do detalhe atual
         $this->qtdLinhasDetalheAtual = null;
