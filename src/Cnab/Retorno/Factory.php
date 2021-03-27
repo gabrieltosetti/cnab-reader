@@ -21,18 +21,18 @@ class Factory
 
     }
 
-    private static function getNumeroBancoArquivo(\SplFileObject $file): string
+    private static function getNumeroBancoArquivo(SplFileObject $file): string
     {
         // Posição genérica do código do banco: 1, 3
         return substr($file->current(), 0, 3);
     }
 
-    private static function getTamanhoArquivo(\SplFileObject $file): int
+    private static function getTamanhoArquivo(SplFileObject $file): int
     {
         return strlen(preg_replace("/[\n\r]/", '', $file->current()));
     }
 
-    private static function getVersaoArquivo(\SplFileObject $file): string
+    private static function getVersaoArquivo(SplFileObject $file): string
     {
         // Posição genérica da versão do arquivo: 164, 166
         return substr($file->current(), 163, 3);
@@ -47,8 +47,10 @@ class Factory
         return $layout;
     }
 
-    private static function openFile($filePath): \SplFileObject
+    private static function openFile($filePath): SplFileObject
     {
-        return new SplFileObject($filePath, 'r');
+        $arquivo = new SplFileObject($filePath, 'r');
+        $arquivo->setFlags(SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE);
+        return $arquivo;
     }
 }

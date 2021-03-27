@@ -54,7 +54,7 @@ class Factory
         $linhas = [];
 
         do {
-            $linha = preg_replace("/[\n\r]/", '', $file->current());
+            $linha = $file->current();
             $file->next();
 
             $segCodigo = self::getPosition($linha, $posicaoSegmentosPadrao);
