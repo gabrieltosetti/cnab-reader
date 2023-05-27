@@ -1,14 +1,14 @@
 <?php
 include_once 'vendor/autoload.php';
 
-use \Cnab\Retorno\Factory;
+use \Cnab\Retorno\ArquivoFactory;
 
 error_reporting(E_ALL);
 set_time_limit(1000);
 
 $filePath = 'cnab-files/santander240_28-04-2020.TXT';
 
-$arquivo = Factory::criarArquivo($filePath);
+$arquivo = ArquivoFactory::criarArquivo($filePath);
 
 $detalhes = $arquivo->getDetalhes();
 

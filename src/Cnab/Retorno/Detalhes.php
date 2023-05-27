@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Cnab\Retorno;
 
@@ -6,48 +7,22 @@ use \Cnab\Retorno\Detalhe;
 
 class Detalhes implements \Iterator
 {
-    /**
-     * 
-     * @var \SplFileObject
-     */
-    private $file;
+    private \SplFileObject $file;
 
-    /**
-     * 
-     * @var array
-     */
-    public $layout;
+    public array $layout;
 
-    /**
-     * 
-     * @var int
-     */
-    private $key;
+    private int $key;
 
-    /**
-     * Quantidade de linhas (segmentos) do detalhe atual
-     * @var int
-     */
-    private $qtdLinhasDetalheAtual;
+    /** Quantidade de linhas (segmentos) do detalhe atual */
+    private int $qtdLinhasDetalheAtual;
 
-    /**
-     * Todas as linhas do detalhe atual
-     * @var array
-     */
-    private $linhasDetalheAtual;
+    /** Todas as linhas do detalhe atual */
+    private array $linhasDetalheAtual;
 
-    /**
-     * Numero do banco com 3 caracteres (ex.: 001, 033, 237)
-     *
-     * @var string
-     */
-    public $codigoBanco;
+    /** Numero do banco com 3 caracteres (ex.: 001, 033, 237) */
+    public string $codigoBanco;
 
-    /**
-     * 
-     * @var bool
-     */
-    private $isValid = null;
+    private ?bool $isValid = null;
 
     public function __construct(\SplFileObject $file, string $codigoBanco, array $layout)
     {
@@ -58,13 +33,13 @@ class Detalhes implements \Iterator
         $this->pularHeaderTrailler();
     }
 
-    public function getLinhaAtual()
+    public function getLinhaAtual(): int
     {
         // Lembrando que a primeira linha é o indice 0
         return $this->key + 1;
     }
 
-    private function pularHeaderTrailler()
+    private function pularHeaderTrailler(): void
     {
         $this->file->seek(2);
         $this->key = 2;
@@ -79,14 +54,14 @@ class Detalhes implements \Iterator
         return $this->linhasDetalheAtual;
     }
 
-    private function validarDetalheAtual()
+    private function validarDetalheAtual(): void
     {
         $linhas = Detalhe\Factory::getLinhasSegmentos($this->file, $this->layout['retorno']['segmentos']);
 
         if (!$linhas) {
             $this->isValid = false;
-            $this->qtdLinhasDetalheAtual = null;
-            $this->linhasDetalheAtual = null;
+            $this->qtdLinhasDetalheAtual = 0;
+            $this->linhasDetalheAtual = [];
 
             return;
         }
@@ -107,7 +82,7 @@ class Detalhes implements \Iterator
         return Detalhe\Factory::createDetalhe($linhas, $this->layout);
     }
 
-    public function next()
+    public function next(): void
     {
         if (!$this->valid()) {
             return;
@@ -123,7 +98,7 @@ class Detalhes implements \Iterator
         $this->key += $this->qtdLinhasDetalheAtual;
 
         // limpar a quantidade de linhas do detalhe atual
-        $this->qtdLinhasDetalheAtual = null;
+        $this->qtdLinhasDetalheAtual = 0;
 
         // Apos andar o ponteiro, não sabemos se o detalhe atual é valido
         $this->isValid = null;
@@ -140,7 +115,7 @@ class Detalhes implements \Iterator
         return $this->key;
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->pularHeaderTrailler();
     }

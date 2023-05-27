@@ -8,9 +8,9 @@
             "name": "Listen for cnab",
             "type": "php",
             "request": "launch",
-            "port": 9000,
+            "port": 9003,
             "pathMappings": {
-                "/var/www/html": "${workspaceRoot}/"
+                "/app": "${workspaceRoot}/"
             },
             "hostname": "localhost"
         },

@@ -6,7 +6,7 @@ use \SplFileObject;
 use \Cnab\Retorno\Arquivo;
 use \Cnab\Banco;
 
-class Factory
+class ArquivoFactory
 {
     public static function criarArquivo(string $filePath)
     {

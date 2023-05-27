@@ -1,0 +1,28 @@
+version: "3.1"
+services:
+
+  php:
+    build: ./php
+    container_name: cnab-reader-php
+    ports:
+      - "80:80"
+    tty: true
+    volumes:
+      - ./..:/app
+      - static-content:/tmp/xdebug
+    environment:
+      APPLICATION_ENV: development
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  webgrind:
+    image: jokkedk/webgrind:latest
+    container_name: webgrinder
+    ports:
+      - "8001:80"
+    tty: true
+    volumes:
+      - static-content:/tmp
+
+volumes:
+  static-content:
